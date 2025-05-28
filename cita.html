@@ -1,26 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Citas</title>
+  <meta charset="UTF-8">
+  <title>Haz tu cita</title>
+  <link rel="stylesheet" href="EstiloServ.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-  <h1>Reservar cita</h1>
-  <input id="fecha" type="date" />
-  <input id="hora" type="time" />
-  <input id="servicio" type="text" placeholder="Servicio" />
-  <button onclick="crearCita()">Reservar</button>
+  <header class="navbar navbar-expand-lg navbar-light" id="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="inicio.html">
+        <img src="ImgServ/Logo.jpg" alt="Logo" class="logo">
+      </a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="inicio.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Pantalla servicios.html">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="cita.html">Haz una Cita</a>
+        </li>
+      </ul>
+    </div>
+  </header>
 
-  <h2>Mis Citas</h2>
   <ul id="listaCitas"></ul>
+  <div class="container mt-5">
+    <h3 class="text-white mb-4">Agenda tu Cita</h3>
+    <form id="formCita">
+      <div class="form-group">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" class="form-control" id="nombre" required>
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" class="form-control" id="telefono" required>
+      </div>
+      <div class="form-group">
+        <label for="servicio">Servicio:</label>
+        <select class="form-control" id="servicio" required>
+          <option value="">Selecciona un servicio</option>
+          <option value="Corte de pelo">Corte de pelo</option>
+          <option value="Corte de barba">Corte de barba</option>
+          <option value="Facial">Facial</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="barbero">Barbero:</label>
+        <select class="form-control" id="barbero" required>
+          <option value="">Selecciona un barbero</option>
+          <option value="Luis">Luis</option>
+          <option value="Jorge">Jorge</option>
+          <option value="Oziel">Oziel</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fecha">Fecha:</label>
+        <input type="date" class="form-control" id="fecha" required>
+      </div>
+      <div class="form-group">
+        <label for="hora">Hora:</label>
+        <input type="time" class="form-control" id="hora" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Agendar</button>
+    </form>
+  </div>
 
   <script>
     const token = localStorage.getItem("token");
 
-    async function crearCita() {
+    // Auto-selección de barbero por URL
+    const params = new URLSearchParams(window.location.search);
+    const barberoParam = params.get('barbero');
+    if (barberoParam) {
+      window.addEventListener('DOMContentLoaded', () => {
+        const select = document.getElementById("barbero");
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value === barberoParam) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      });
+    }
+
+    document.getElementById("formCita").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombre").value;
+      const telefono = document.getElementById("telefono").value;
+      const servicio = document.getElementById("servicio").value;
+      const barbero = document.getElementById("barbero").value;
       const fecha = document.getElementById("fecha").value;
       const hora = document.getElementById("hora").value;
-      const servicio = document.getElementById("servicio").value;
 
       const res = await fetch("http://localhost:5000/api/citas", {
         method: "POST",
@@ -28,17 +102,18 @@
           "Content-Type": "application/json",
           Authorization: "Bearer " + token
         },
-        body: JSON.stringify({ fecha, hora, servicio })
+        body: JSON.stringify({ nombre, telefono, servicio, barbero, fecha, hora })
       });
 
       const data = await res.json();
       if (res.ok) {
         alert(data.msg);
         obtenerCitas();
+        document.getElementById("formCita").reset();
       } else {
         alert(data.msg);
       }
-    }
+    });
 
     async function obtenerCitas() {
       const res = await fetch("http://localhost:5000/api/citas", {
@@ -49,12 +124,16 @@
       ul.innerHTML = "";
       citas.forEach(cita => {
         const li = document.createElement("li");
-        li.textContent = `${cita.fecha} - ${cita.hora} - ${cita.servicio}`;
+        li.textContent = `${cita.fecha} - ${cita.hora} - ${cita.servicio} con ${cita.barbero}`;
         ul.appendChild(li);
       });
     }
 
     obtenerCitas();
   </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
