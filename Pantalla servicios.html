@@ -1,79 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios de Barbería</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="EstiloServ.css">
+  <meta charset="UTF-8" />
+  <title>Servicios</title>
 </head>
 <body>
-    <header class="navbar navbar-expand-lg navbar-light" id="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="inicio.html">
-                <img src="ImgServ/Logo.jpg" alt="Logo" class="logo">
-            </a>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="inicio.html">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Pantalla servicios.html">Servicios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="cita.html">Haz una Cita</a>
-                </li>
-            </ul>
-        </div>
-    </header>
+  <h1>Servicios disponibles</h1>
+  <ul id="listaServicios"></ul>
 
-    <div class="container text-center mt-5">
-        <h3 class="TextServ">Nuestros Servicios</h3>
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <a href="barberos.html?servicio=corte" class="text-decoration-none">
-                    <div class="servicio-box">
-                        <img src="ImgServ/Corte1.jpg" alt="Corte de pelo" class="img-fluid">
-                        <p>Corte de pelo</p>
-                        <p>$150</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="barberos.html?servicio=barba" class="text-decoration-none">
-                    <div class="servicio-box">
-                        <img src="ImgServ/Barba1.jpg" alt="Corte de Barba" class="img-fluid">
-                        <p>Corte de Barba</p>
-                        <p>$145</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="barberos.html?servicio=facial" class="text-decoration-none">
-                    <div class="servicio-box">
-                        <img src="ImgServ/Facial1.jpeg" alt="Facial" class="img-fluid">
-                        <p>Facial</p>
-                        <p>$120</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+  <script>
+    async function cargarServicios() {
+      const res = await fetch("http://localhost:5000/api/servicios");
+      const servicios = await res.json();
+      const ul = document.getElementById("listaServicios");
+      servicios.forEach(servicio => {
+        const li = document.createElement("li");
+        li.textContent = `${servicio.nombre} - ${servicio.descripcion}`;
+        ul.appendChild(li);
+      });
+    }
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        window.onscroll = function() {
-            var navbar = document.getElementById("navbar");
-            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-                navbar.classList.add("navbar-dark");
-                navbar.classList.remove("navbar-light");
-            } else {
-                navbar.classList.add("navbar-light");
-                navbar.classList.remove("navbar-dark");
-            }
-        };
-    </script>
+    cargarServicios();
+  </script>
 </body>
 </html>

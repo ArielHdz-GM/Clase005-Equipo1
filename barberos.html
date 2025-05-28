@@ -1,37 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Selecciona tu Barbero</title>
-    <link rel="stylesheet" href="EstiloBarberos.css">
+  <meta charset="UTF-8" />
+  <title>Barberos</title>
 </head>
 <body>
-    <h2>Selecciona el barbero que quieras para tu servicio</span></h2>
-    <div class="barberos-container">
-        <div class="barbero">
-            <img src="ImgServ/barbero1.png" alt="Barbero Juan">
-            <p>Luis</p>
-            <p>Experto en cortes modernos</p>
-            <a href="cita.html?barbero=Luis">Elegir</a>
-        </div>
-        <div class="barbero">
-            <img src="ImgServ/barbero2.png" alt="Barbero Luis">
-            <p>Jorge</p>
-            <p>Experto en barba y estilos clásicos</p>
-            <a href="cita.html?barbero=Jorge">Elegir</a>
-        </div>
-        <div class="barbero">
-            <img src="ImgServ/barbero3.jpg" alt="Barbero Luis">
-            <p>Oziel</p>
-            <p>Experto en barba y estilos clásicos</p>
-            <a href="cita.html?barbero=Oziel">Elegir</a>
-        </div>
-    </div>
+  <h1>Nuestros barberos</h1>
+  <ul id="listaBarberos"></ul>
 
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const servicio = params.get('servicio');
-        document.getElementById("tipo-servicio").textContent = servicio;
-    </script>
+  <script>
+    async function cargarBarberos() {
+      const res = await fetch("http://localhost:5000/api/barberos");
+      const barberos = await res.json();
+      const ul = document.getElementById("listaBarberos");
+      barberos.forEach(barbero => {
+        const li = document.createElement("li");
+        li.textContent = `${barbero.nombre} - ${barbero.experiencia}`;
+        ul.appendChild(li);
+      });
+    }
+
+    cargarBarberos();
+  </script>
 </body>
 </html>
