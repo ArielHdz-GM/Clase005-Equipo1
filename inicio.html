@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inicio - Barbería</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="EstiloServ.css" />
+</head>
+<body>
+    <header class="navbar navbar-expand-lg navbar-light" id="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="inicio.html">
+                <img src="ImgServ/Logo.jpg" alt="Logo" class="logo">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="inicio.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Pantalla servicios.html">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="cita.html">Haz una Cita</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container text-center mt-5 pt-5">
+        <h1 class="display-4 font-weight-bold text-white mb-4">
+            Estilo, precisión y confianza en cada corte.
+        </h1>
+
+        <div id="catalogoCarrusel" class="carousel slide" data-ride="carousel" data-interval="4000">
+            <ol class="carousel-indicators">
+                <li data-target="#catalogoCarrusel" data-slide-to="0" class="active"></li>
+                <li data-target="#catalogoCarrusel" data-slide-to="1"></li>
+                <li data-target="#catalogoCarrusel" data-slide-to="2"></li>
+                <li data-target="#catalogoCarrusel" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="ImgServ/Corte1.jpg" class="d-block w-100" alt="Corte moderno" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Cortes modernos</h5>
+                        <p>Diseños personalizados para cada estilo.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="ImgServ/Barba1.jpg" class="d-block w-100" alt="Corte de barba" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Corte de Barba</h5>
+                        <p>Estilos clásicos y modernos para tu barba.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="ImgServ/Facialmoderno.jpg" class="d-block w-100" alt="Tratamiento facial" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Tratamientos faciales</h5>
+                        <p>Cuida y revitaliza tu piel con nosotros.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="ImgServ/Barberia.jpeg" class="d-block w-100" alt="Estilo único" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Estilo único</h5>
+                        <p>Déjate llevar por nuestra experiencia.</p>
+                    </div>
+                </div>
+            </div>
+
+            <a class="carousel-control-prev" href="#catalogoCarrusel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#catalogoCarrusel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+            </a>
+        </div>
+    </div>
+
+    <a href="Pantalla servicios.html" class="btn btn-cita fixed-bottom mr-3 mb-3 ml-auto" style="width: fit-content;">
+        <i class="fas fa-calendar-alt mr-2"></i>Agendar Cita
+    </a>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
